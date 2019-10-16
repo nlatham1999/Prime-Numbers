@@ -86,7 +86,7 @@ class prime
 							boolean inRange = true;
 							for(int j = 2; j < size && inRange; j++){
 								int temp = list.get(j)*prime;
-								if(temp <= n)
+								if(temp <= n) // (temp <= n) ? head.add(temp) : inRange = false;
 									heap.add(temp);
 								else
 									inRange = false;
@@ -107,15 +107,15 @@ class prime
 
 	public static void main (String[] args)
 	{		
-        //Scanner scanner = new Scanner(System.in);
-		//System.out.println("Enter the value of n:");
-		//int n = scanner.nextInt();
-		//scanner.close();
+        Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter the value of n:");
+		int n = scanner.nextInt();
+		scanner.close();
 
         for(int i = 0; i < 3; i++){
-            System.out.println("V3: " + getPrimesV3(1000000000));
-            //System.out.println("V1: " + getPrimesV1(n));
-            //System.out.println("V2: " + getPrimesV2(n));
+            System.out.println("V1: " + getPrimesV1(n));
+            System.out.println("V2: " + getPrimesV2(n));
+            System.out.println("V3: " + getPrimesV3(n));
             System.out.println(" ");
         }
 	}
