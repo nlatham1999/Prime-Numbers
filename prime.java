@@ -3,7 +3,7 @@ import java.io.*;
 
 class prime
 {
-    private static long getPrimesV1(int n){
+    private static long getPrimesV1(long n){
 		//Empty String
        
         long timeFirst = System.nanoTime();
@@ -26,12 +26,12 @@ class prime
         
         
         long timeSecond = System.nanoTime();
-        return timeSecond - timeFirst;
-		// System.out.println(list);
+	//System.out.println(list);
+	return timeSecond - timeFirst;
 		
 	}
 	
-	private static long getPrimesV2(int n){
+	private static long getPrimesV2(long n){
 
         long timeFirst = System.nanoTime();
 
@@ -58,11 +58,12 @@ class prime
             }
         }
         long timeSecond = System.nanoTime();
-        return timeSecond - timeFirst;
-		// System.out.println(list);
+	//System.out.println(list);       
+	return timeSecond - timeFirst;
+
     }
 	
-	private static long getPrimesV3(int n){
+	private static long getPrimesV3(long n){
 
         long timeFirst = System.nanoTime();
 
@@ -70,6 +71,7 @@ class prime
 
 		PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
 		ArrayList<Integer> list = new ArrayList<Integer>();
+		
 		if(n >= 2){
 			list.add(2);
             if(n >= 3){
@@ -80,19 +82,35 @@ class prime
 					last = 5;
 					for(int i = 3; last < n; i++){
 						int prime = 3*i - 1 - i%2;
+						//System.out.println(heap.peek()+" "+prime);
+						while(heap.peek() != null && heap.peek() < prime){
+							int temp = heap.poll();
+						}
 						if(heap.peek() == null || prime != heap.peek()){
 							list.add(prime);
 							int size = list.size();
 							boolean inRange = true;
+							boolean inRange2 = true;
 							for(int j = 2; j < size && inRange; j++){
-								int temp = list.get(j)*prime;
-								if(temp <= n) // (temp <= n) ? head.add(temp) : inRange = false;
+								int val = list.get(j);
+								int temp = val*prime;
+								if(temp <= n){ // (temp <= n) ? head.add(temp) : inRange = false;
 									heap.add(temp);
-								else
+								}else
 									inRange = false;
 							}
 						}else{
-							long temp = heap.poll();
+							int temp = heap.poll();
+							boolean inRange = true;
+							int size = list.size();
+							for(int j = 2; j < size && inRange; j++){
+								int val = list.get(j);
+								if(val*temp <= n){
+									heap.add(val*temp);
+								}else{
+									inRange = false;
+								}
+							}
 						}
 						last = prime;
 					}
@@ -100,8 +118,7 @@ class prime
             }
         }
         long timeSecond = System.nanoTime();
-		//System.out.println(list);
-		
+	//System.out.println(list);	
         return timeSecond - timeFirst;
     }
 
@@ -109,7 +126,7 @@ class prime
 	{		
         Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter the value of n:");
-		int n = scanner.nextInt();
+		long n = scanner.nextInt();
 		scanner.close();
 
         for(int i = 0; i < 3; i++){
